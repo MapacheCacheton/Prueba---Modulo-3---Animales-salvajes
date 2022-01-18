@@ -12,34 +12,36 @@ const moduloAnimal = (function(){
 
 
     //Events
-    btn_registrar.addEventListener('click', clickHandler)//Evento de boton para generar objeto y carta de animal
     tipo_animal.addEventListener('change', chageHandler)//Evento de dropdownlist para capturar tipo de animal
+    btn_registrar.addEventListener('click', clickHandler)//Evento de boton para generar objeto y carta de animal
 
     //Funciones
     async function init() {//Funcion principal
         state['animales'] = await getAnimal()
     }
 
-    function clickHandler(e){//funcion de evento para boton
-        e.preventDefault()
-        const edad_animal = document.querySelector('#edad')
-        const tipo = document.querySelector('#animal')
-        const comentario = document.querySelector('#comentarios')
-        const animal_fil = filtarAnimal(state, tipo.value)
-        const obj_animal = instanciarAnimal(tipo.value, edad_animal.value, comentario.value, animal_fil)
-        console.log(obj_animal);
-        div_animales.innerHTML = renderTarjeta(obj_animal)
-    }
     function chageHandler(e){//funcion de evento para dropdownlist
         e.preventDefault()
         const animal_select = filtarAnimal(state, this.value)
         preview_animal.innerHTML = `<img class="ajustado" src="./assets/imgs/${animal_select.imagen}" alt="">`
     }
+    function clickHandler(e){//funcion de evento para boton
+        e.preventDefault()
+        //DOMCache
+        const edad_animal = document.querySelector('#edad')
+        const tipo = document.querySelector('#animal')
+        const comentario = document.querySelector('#comentarios')
+
+
+        const animal_fil = filtarAnimal(state, tipo.value)
+        const obj_animal = instanciarAnimal(tipo.value, edad_animal.value, comentario.value, animal_fil)
+        div_animales.innerHTML = renderTarjeta(obj_animal)
+    }
 
     async function getAnimal(){
         const animales = await fetchAnimal()
-        const obj_animales = animales.animales
-        return obj_animales
+        const arr_animales = animales.animales
+        return arr_animales
     }
 
     async function fetchAnimal(){
