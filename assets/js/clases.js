@@ -22,6 +22,9 @@ class Animal{
     get img(){
         return this.#img
     }
+    get comentarios(){
+        return this.#comentarios
+    }
     set comentarios(comentario){
         this.#comentarios = comentario
     }
